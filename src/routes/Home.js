@@ -1,33 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import { Navigation } from '../components/Navigation';
+import React, {useState} from 'react';
 import { PokemonCard } from '../components/PokemonCard';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 
-const LIMIT = 150;
-const pokeApi = `https://pokeapi.co/api/v2/pokemon/?limit=${LIMIT}`;
-
-function Home() {
-const [pokemonList, setPokemonList] = useState([]);
+function Home({pokemonList}) {
 const [query, setQuery] = useState('');
 
-// Adding search query to console.log to check
-// console.log(pokemonList.filter(pokemonList => pokemonList.name.includes(query)));
-
-useEffect(() => {
-const fetchPokeApiData = async () => {
-    // fetch pokemon data
-    const pokeData = await fetch(pokeApi)
-    // return data as json
-    const pokeDataToJson = await pokeData.json();
-    // set pokemon data array
-    setPokemonList(pokeDataToJson.results);
-}
-
-// call the fetch function
-fetchPokeApiData();
-}, []);
 
 // Event handler for input change
 const handleChange = event => {

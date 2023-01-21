@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
-import { PokemonCard } from './components/PokemonCard';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import { Home}  from './routes/Home'
-
+import {PokemonDetails } from '../src/routes/PokemonDetails'
 
 const LIMIT = 150;
 const pokeApi = `https://pokeapi.co/api/v2/pokemon/?limit=${LIMIT}`;
@@ -13,8 +11,6 @@ function App() {
   const [pokemonList, setPokemonList] = useState([]);
 
 
-  // Adding search query to console.log to check
-  // console.log(pokemonList.filter(pokemonList => pokemonList.name.includes(query)));
 
   useEffect(() => {
     const fetchPokeApiData = async () => {
@@ -32,10 +28,15 @@ function App() {
 
 
   return (
-    <div data-testid="app">
-      <Navigation/>
-      <Home pokemonList={pokemonList}/>
-    </div>
+    <BrowserRouter>
+      <div data-testid="app">
+        <Navigation/>
+        <Routes>
+          <Route path="/" element ={ <Home pokemonList={pokemonList}/> } />
+          <Route path="/:name" element={ <PokemonDetails /> } />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
